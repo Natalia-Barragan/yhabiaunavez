@@ -1,4 +1,4 @@
-const carrito = JSON.parse(localStorage.getItem("miCarrito"))
+const carrito = JSON.parse(localStorage.getItem("miCarrito")) || []
 const container = document.getElementById("container")
 const inputSearch = document.querySelector("input#inputSearch")
 const imgCarrito = document.getElementById("imgCarrito")

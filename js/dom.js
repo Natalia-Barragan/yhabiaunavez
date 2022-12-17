@@ -1,11 +1,20 @@
 const carrito = JSON.parse(localStorage.getItem("miCarrito")) || []
 const container = document.getElementById("container")
 const inputSearch = document.querySelector("input#inputSearch")
-const imgCarrito = document.getElementById("imgCarrito")
+const btnCarrito = document.getElementById("btnCarrito")
+const URL = 'bbdd/main.json'
+const mercaderia = []
 
-imgCarrito.addEventListener("mousemove", ()=> {
+fetch(URL)
+    .then((response) => data = response.json())
+    .then((data) => mercaderia.push(...data))
+    .then(() => subirTarjetas(mercaderia))
+    .then(() => activarClickBotones())
+    .catch(error => container.innerHTML = retornoError())
+
+btnCarrito.addEventListener("mousemove", ()=> {
     let totalCarrito = carrito.length
-        imgCarrito.title = `${totalCarrito} productos en el carrito`
+    btnCarrito.title = `${totalCarrito} productos en el carrito`
 })
 
 function subirTarjetas(array) {
@@ -17,22 +26,21 @@ function subirTarjetas(array) {
             container.innerHTML = contenido
         }
 }
-subirTarjetas(mercaderias)
 
 function activarClickBotones() {
     const botonesAdd = document.querySelectorAll ("button.boton.botonAdd")
     botonesAdd.forEach(btn => {
         btn.addEventListener("click", ()=> {
-            let resultado = mercaderias.find(prod => prod.id === parseInt(btn.id))
+            let resultado = mercaderia.find(prod => prod.id === parseInt(btn.id))
                 carrito.push(resultado)
                 localStorage.setItem("miCarrito", JSON.stringify(carrito))
+                alerta(`${resultado.tipo} se ha agregado al carrito correctamente.`, "1000", 'success')
         })
     })
 }
-activarClickBotones()
 
 function filtrarMercaderia() {
-    let resultado = mercaderias.filter(mercaderia => mercaderia.tipo.toUpperCase().includes(inputSearch.value.toUpperCase().trim()))    
+    let resultado = mercaderia.filter(mercaderia => mercaderia.tipo.toUpperCase().includes(inputSearch.value.toUpperCase().trim()))    
     if (resultado.length > 0) {
         subirTarjetas(resultado)
         activarClickBotones()
@@ -51,8 +59,16 @@ inputSearch.addEventListener("change", ()=> {
     }
 })
 
-
-
+const alerta = (title, timer, icon)=>{
+    Swal.fire({
+        toast: 'toast',
+        position: 'bottom-start',
+        icon: icon,
+        title: title,
+        showConfirmButton: false,
+        timer: timer
+      })
+}
 
 
 

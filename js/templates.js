@@ -12,6 +12,14 @@ function retornarTarjetas(mercaderia){
                 
 }
 
+function retornoError() {
+    return `<div class="card-error">
+                <p>Le pedimos disculpas, la pagina esta en mantenimiento.<br/>
+                No se pudieron cargar los productos.<br/>
+                Intenta nuevamente en unos instantes.</p>
+            </div>`
+}
+
 function armarTablaCarrito(prod) {
     return `<tr>
                 <td><img src=${prod.imagen} width=40px height=30px></td>

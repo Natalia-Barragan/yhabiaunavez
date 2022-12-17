@@ -1,4 +1,4 @@
-const carrito = JSON.parse(localStorage.getItem("miCarrito"))
+const carrito = JSON.parse(localStorage.getItem("miCarrito")) || []
 const tbody = document.querySelector("tbody")
 
 
@@ -10,7 +10,7 @@ function recuperarCarrito() {
             tablaHTML += armarTablaCarrito(prod)
         });
         tbody.innerHTML = tablaHTML
-       
+        calcularTotal()
     }
 }
 recuperarCarrito()
@@ -50,8 +50,6 @@ function calcularTotal() {
         total.innerText = `$ ${totalCarrito.toLocaleString()}`
 }
 
-calcularTotal()
-
 const btnComprar = document.querySelector("#btnComprar")
 
 btnComprar.addEventListener("click", ()=>{
@@ -72,7 +70,7 @@ btnComprar.addEventListener("click", ()=>{
             carrito.length = 0
             Swal.fire("¡Muchas gracias por su compra!",'', '',)
                 .then(()=> {
-                    location.href = '../index.html'
+                    location.href = 'index.html'
                 })
             }
         })

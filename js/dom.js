@@ -10,7 +10,7 @@ fetch(URL)
     .then((data) => mercaderia.push(...data))
     .then(() => subirTarjetas(mercaderia))
     .then(() => activarClickBotones())
-    .catch(error => container.innerHTML = retornoError())
+    .catch(_error => container.innerHTML = retornoError())
 
 btnCarrito.addEventListener("mousemove", ()=> {
     let totalCarrito = carrito.length
@@ -54,7 +54,7 @@ inputSearch.addEventListener("change", ()=> {
     if (inputSearch.value.trim() !== "") {
         filtrarMercaderia()
     } else {
-        subirTarjetas(mercaderias)
+        subirTarjetas(mercaderia)
         activarClickBotones()
     }
 })
